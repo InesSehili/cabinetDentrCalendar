@@ -1,0 +1,183 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Fiche medical {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      <div class="preloader bg-soft flex-column justify-content-center align-items-center">
+        <img class="loader-element animate__animated animate__jackInTheBox" src="/static/assets/img/brand/dental-presentation-blue.png" height="300" alt="Dental App">
+      </div>
+
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="#">Patient</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Afficher details</li>
+              </ol>
+          </nav>
+          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                  <h1 class="h4">Details fiche médical</h1>
+                  <p class="mb-0">Dozens of reusable components built to provide buttons, alerts, popovers, and more.</p>
+              </div>
+              
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-8 mb-4">
+              <div class="card border-light shadow-sm components-section">
+                  <div class="card-body">     
+                     
+                      <!-- Title  -->
+                      <div class="row">
+                          <div class="col-md-5">
+                              <div class="mb-5">
+                                  <h2 class="h5 mb-3">Informations fiche médical patients: </h2>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- End of Title -->
+                      <div class="row mb-4 mb-lg-5">
+                      
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Nom et prenom :</span>
+                              </div>
+                              
+                              <p class="lead text-info ">{{nom}} {{prenom}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Groupage :</span>
+                              </div>
+                              
+                              <p class="lead text-info ">{{groupage}} 
+                              </p>
+                          </div>
+                        
+                      </div>
+                                            <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">antecF :</span>
+                              </div>
+                              <p class="lead text-info">{{antecF}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">antecC :</span>
+                              </div>
+                              <p class="lead text-info"> {{antecC}}</p>
+                          </div>
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">antecM:</span>
+                              </div>
+                              <p class="lead text-info">{{antecM}}
+                              </p>
+                          </div>
+                           <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">antecA :</span>
+                              </div>
+                              <p class="lead text-info">{{antecA}}
+                              </p>
+                          </div>
+                                                  
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Maladie axcecie:</span>
+                              </div>
+                              <p class="lead text-info">{{maladie_axcecie}}
+                              </p>
+                          </div>
+                           <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Médicament en cours :</span>
+                              </div>
+                              <p class="lead text-info">{{medication_encours}}
+                              </p>
+                          </div>
+                                                  
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-12">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Histoire de la maladie:</span>
+                              </div>
+                              <p class="lead text-info">{{histoire_de_la_maladie}}
+                              </p>
+                          </div>
+                           
+                                                  
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          
+                          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                
+                  <form action="{% url 'supprimer_fiche_medical' %}" method="POST">
+                      {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="id_patient" value="{{id_patient}}">
+            
+                   <button class="btn btn-outline-danger" type="submit">Supprimer</button>
+                   </form>
+            
+                  
+                  
+              </div>
+              <div>
+                 <form action="{% url 'modifier_fiche_medical' %}" method="POST">
+                    {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+              
+                  <button type="submit" class="btn btn-outline-gray"> Modifier fiche médicale</button>
+                  </form>
+              </div>
+          </div>
+
+                       
+                                                  
+                      </div>
+                      
+                      
+                     
+                      
+                    
+                     
+                     
+                    
+                      
+                     
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+    </main>
+                                    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

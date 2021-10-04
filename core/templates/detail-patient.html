@@ -1,0 +1,184 @@
+  {% extends "layouts/base.html" %}
+
+{% block title %} Patient {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      <div class="preloader bg-soft flex-column justify-content-center align-items-center">
+        <img class="loader-element animate__animated animate__jackInTheBox" src="/static/assets/img/brand/dental-presentation-blue.png" height="300" alt="Dental App
+        ">
+      </div>
+
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="#">Patient</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Afficher details</li>
+              </ol>
+          </nav>
+          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                  <h1 class="h4">Details patient</h1>
+                  <p class="mb-0">Dozens of reusable components built to provide buttons, alerts, popovers, and more.</p>
+                  <!-- <form action="{% url 'liste_consultation_patient' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+
+
+                  <button type="submit"class="btn btn-info"> <span class="far fa-file-alt"></span> Afficher consultations</button>
+                  </form> -->
+              </div>
+              <div>
+                
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-8 mb-4">
+              <div class="card border-light shadow-sm components-section">
+                  <div class="card-body">     
+                     
+                      <!-- Title  -->
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="mb-5">
+                                  <h2 class="h5 mb-3">Informations patients: </h2>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- End of Title -->
+                      <div class="row mb-4 mb-lg-5">
+                      
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Nom et prenom :</span>
+                              </div>
+                              
+                              <p class="lead text-info ">{{nom}} {{prenom}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">Date de naissance : </span>
+                              </div>
+                              <p class="lead text-info"> {{date_naissance}}</p>
+                          </div>
+                      </div>
+                                            <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Sexe :</span>
+                              </div>
+                              <p class="lead text-info">{{sexe}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">Adresse</span>
+                              </div>
+                              <p class="lead text-info"> {{adresse}} {{ville}}</p>
+                          </div>
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Numéro de télephone :</span>
+                              </div>
+                              <p class="lead text-info">{{numero_tel}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">Adresse email :</span>
+                              </div>
+                              <p class="lead text-info"> {{email}}</p>
+                          </div>
+                                                  
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                         <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Profession :</span>
+                              </div>
+                              <p class="lead text-info">{{profession}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Date de création :</span>
+                              </div>
+                              <p class="lead text-info">{{created_at}}
+                              </p>
+                          </div>
+                          <div class="d-flex justify-content-between w-100 flex-wrap">
+            <!--   <div class="mb-3 mb-lg-0">
+                {%if fiche_medical is True   %}
+                  <form action="http://localhost:8000/creer_fiche_medical/" method="POST">  
+                      {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+                   <button class="btn btn-outline-gray" type="submit">Créer fiche medical</button>
+                   </form>
+                  {% endif %}
+                  
+                  {%if fiche_medical is False   %}
+
+                    <form action="http://localhost:8000/afficher_fiche_medical/" method="POST">
+                      {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+                   <button class="btn btn-secondary text-dark mr-2 dropdown-toggle" type="submit">Afficher fiche médicale</button>
+                   </form>
+                    {% endif %}
+              </div> -->
+            <!--   <div>
+                 <form action="http://localhost:8000/creer_consultation/" method="POST">
+                    {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+                  <button type="submit" class="btn btn-gray"> Créer consultation</button>
+                  </form>
+              </div> -->
+          </div>
+
+                       
+                                                  
+                      </div>
+                      
+                      
+                     
+                      
+                    
+                     
+                     
+                    
+                      
+                     
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+    </main>
+                                    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

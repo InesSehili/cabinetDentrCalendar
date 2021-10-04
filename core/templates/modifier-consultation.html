@@ -1,0 +1,140 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Consultation {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+       
+
+        <form action="{% url 'modifier_prix_consultation' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Information consultation</h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <label for="first_name">Nom</label>
+                                    <input name="nom" class="form-control" id="first_name" type="text"
+                                           placeholder="{{nom}}" value="{{nom}}"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="last_name">Prenom</label>
+                                    <input name="prenom" class="form-control" id="last_name" type="text"
+                                           placeholder="{{prenom}}" value="{{prenom}}"
+                                           disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-3">
+                                <label for="date_consultation">Date de consultation: AAAA-MM-JJ HH:MM</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                    <input name="date_consultation"  class="form-control" id="date_consultation"
+                                         placeholder="AAAA-MM-JJ HH:MM" value="{{date_consultation}}" disabled>
+                                </div>
+                            </div>
+                    <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="prix_defini"> Prix consultation</label>
+                                    <input name="prix_defini" class="form-control" id="prix_defini" type="number"
+                                           placeholder="prix de consultaions" value="{{prix_defini}}"  required >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                       
+                           <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="prix_paye"> Prix payé</label>
+                                    <input name="prix_paye" class="form-control" id="prix_paye" type="number"
+                                           placeholder="Prix payé" value="{{prix_paye}}" >
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                   <label for="reste"> Reste à payer</label> 
+                                    <input name="reste" class="form-control" id="reste" type="number"
+                                           placeholder="Prix reste" value="{{reste}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                          
+                    
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+               <div class="col-12 col-xl-4">
+                    <div class="row">
+                        <!-- <div class="col-12 mb-4">
+                            <div class="card border-light text-center p-0">
+                                <div class="profile-cover rounded-top"
+                                     data-background="/static/assets/img/profile-cover.jpg"></div>
+                                <div class="card-body pb-5">
+                                    <img src="{{ profile.get_avatar }}"
+                                         class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
+                                         alt="Neil Portrait">
+                                    <h4 class="h3">{{ profile.user.username }}</h4>
+                                    <h4 class="font-weight-normal">{{ profile.user.get_full_name }}</h4>
+                                    <h5 class="font-weight-normal">
+                                        {{ request.user.email }}
+                                    </h5>
+                                    <p class="text-gray mb-4">{{ profile.address|default:'' }}</p>
+                                    <a class="btn btn-sm btn-primary mr-2" href="#"><span
+                                            class="fas fa-user-plus mr-1"></span> Connect</a>
+                                    <a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                           <!--  <div class="card card-body bg-white border-light shadow-sm mb-4"> -->
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-info">
+                                 <span  class="far fa-file-alt fa-10x"></span>
+                              <!--   <h2 class="h5 mb-4">Select profile photo</h2>
+                                <div class="d-xl-flex align-items-center">
+                                    <div class="file-field">
+                                        <div class="d-flex justify-content-xl-center ml-xl-3">
+                                            <div class="d-flex">
+                                                <span class="icon icon-md">
+                                                    <span class="fas fa-paperclip mr-3"></span>
+                                                </span>
+                                                <input name="avatar" type="file">
+                                                <div class="d-md-block text-left">
+                                                    <div class="font-weight-normal text-dark mb-1">Choose Image</div>
+                                                    <div class="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

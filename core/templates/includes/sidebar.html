@@ -1,0 +1,224 @@
+{% load auth_extras %}
+    <nav id="sidebarMenu" class="sidebar d-md-block bg-primary text-white collapse px-4">
+        <div class="sidebar-sticky pt-3 mx-auto">
+            <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
+            <div class="d-flex align-items-center">
+                <div class="user-avatar lg-avatar mr-4">
+                <img src="/static/assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white" alt="Bonnie Green">
+                </div>
+                <div class="d-block">
+                <h2 class="h6">
+              
+                    {{ request.user.username }}
+                    
+                </h2>
+                <a href="{% url 'logout' %}" class="btn btn-secondary text-dark btn-xs">
+                    <span class="mr-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a>
+                </div>
+            </div>
+            <div class="collapse-close d-md-none">
+                <a href="#sidebarMenu" class="fas fa-times" data-toggle="collapse"
+                    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
+                    aria-label="Toggle navigation"></a>
+            </div>
+            </div>
+            <ul class="nav flex-column">
+                                 
+            <li class="nav-item  {% if 'list_rdv' in segment %} active {% endif %}">
+                <a href="{% url 'cal:calendar' %}" class="nav-link">
+                <span class="sidebar-icon"><span class="far fa-calendar-alt"></span></span>
+                <span>Planning2 </span>
+                </a>
+            </li>
+            <li class="nav-item  {% if 'list_rdv' in segment %} active {% endif %}">
+                <a href="{% url 'list_rdv_toDay' %}" class="nav-link">
+                <span class="sidebar-icon"><span class="far fa-calendar-alt"></span></span>
+                <span>Planning </span>
+                </a>
+            </li>
+            <li class="nav-item  {% if 'rdvs' in segment %} active {% endif %}">
+                <a href="{% url 'rdvs' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="far fa-calendar-check"></span></span>
+                    <span>Rendez-vous</span>
+                </a>
+            </li>
+             
+            <li class="nav-item  {% if 'patients' in segment %} active {% endif %}">
+                <a href="{% url 'patients'%}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-users"></span></span>
+                    <span>Patients</span>
+                </a>
+            </li>
+             <li class="nav-item  {% if 'fiches_medical' in segment %} active {% endif %}">
+                <a href="{% url 'fiches_medical' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-file-medical"></span></span>
+                    <span>Fiches medicales</span>
+                </a>
+            </li>
+             {% if request.user|has_group:"dentiste" %}
+                        <li class="nav-item  {% if 'consultations' in segment %} active {% endif %}">
+                <a href="{% url 'consultations' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="far fa-file-alt"></span></span>
+                    <span>Consultations
+                    </span>
+                </a>
+            </li>
+             {% endif %}
+            {% if request.user|has_group:"dentiste" %}
+            <li class="nav-item  {% if 'medicaments' in segment %} active {% endif %}">
+                <a href="{% url 'medicaments' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-capsules"></span></span>
+                    <span>Medicaments</span>
+                </a>
+            </li>
+             {% endif %}
+             {% if request.user|has_group:"dentiste" %}
+             <li class="nav-item  {% if 'ordonances' in segment %} active {% endif %}">
+                <a href="{% url 'liste_ordonance' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-file-medical-alt"></span></span>
+                    <span>Ordonances</span>
+                </a>
+            </li>
+            {% endif %}
+             {% if request.user|has_group:"dentiste" %}
+             <li class="nav-item  {% if 'radios' in segment %} active {% endif %}">
+                <a href="{% url 'liste_radio' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-teeth"></span></span>
+                    <span>Radios</span>
+                </a>
+            </li>
+             {% endif %}
+           
+
+              {% if request.user|has_group:"dentiste" %}
+             <li class="nav-item  {% if 'stat' in segment %} active {% endif %}">
+                <a href="{% url 'statistique' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-chart-line"></span></span>
+                    <span>Statistique</span>
+                </a>
+            </li>
+            {% endif %}
+           {% if request.user|has_group:"dentiste" %}
+             <li class="nav-item  {% if 'fournisseur' in segment %} active {% endif %}">
+                <a href="{% url 'liste_fournisseur' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-suitcase"></span></span>
+                    <span>Fournisseurs</span>
+                </a>
+            </li>
+             {% endif %}
+          {% if request.user|has_group:"dentiste" %}
+
+              <li class="nav-item  {% if 'employe' in segment %} active {% endif %}">
+                <a href="{% url 'liste_employe' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-user-nurse"></span></span>
+                    <span>Employés</span>
+                </a>
+            </li>
+            {% endif %}
+             <li class="nav-item  {% if 'profile' in segment %} active {% endif %}">
+                <a href="{% url 'profile' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
+                    <span>Settings</span>
+                </a>
+            </li>
+         <!--    <li class="nav-item">
+                <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-app">
+                <span>
+                    <span class="sidebar-icon"><span class="fas fa-table"></span></span> 
+                    Tables
+                </span>
+                <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
+                </span>
+                <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
+                    <ul class="flex-column nav">
+                        <li class="nav-item "><a class="nav-link" href="/bootstrap-tables.html"><span>Bootstrap Tables</span></a></li>
+                    </ul>
+                </div>
+            </li> -->
+           <!--  <li class="nav-item">
+                <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-pages">
+                <span>
+                    <span class="sidebar-icon"><span class="far fa-file-alt"></span></span> 
+                    Page examples
+                </span>
+                <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
+                </span>
+                <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
+                    <ul class="flex-column nav">
+                        <li class="nav-item"><a class="nav-link" href="/sign-in.html"><span>Sign In</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/sign-up.html"><span>Sign Up</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/forgot-password.html"><span>Forgot password</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/reset-password.html"><span>Reset password</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/lock.html"><span>Lock</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/page-404.html"><span>404 Not Found</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/page-500.html"><span>500 Server Error</span></a></li>
+                    </ul>
+                </div>
+            </li> -->
+           <!--  <li class="nav-item">
+                <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#submenu-components">
+                <span>
+                    <span class="sidebar-icon"><span class="fas fa-box-open"></span></span> 
+                    Components
+                </span>
+                <span class="link-arrow"><span class="fas fa-chevron-right"></span></span> 
+                </span>
+                <div class="multi-level collapse " role="list" id="submenu-components" aria-expanded="false">
+                    <ul class="flex-column nav">
+                        <li class="nav-item "><a class="nav-link" href="/ui-buttons.html"><span>Buttons</span></a></li>
+                        <li class="nav-item "><a class="nav-link" href="/ui-notifications.html"><span>Notifications</span></a></li>
+                        <li class="nav-item "><a class="nav-link" href="/ui-forms.html"><span>Forms</span></a></li>
+                        <li class="nav-item "><a class="nav-link" href="/ui-modals.html"><span>Modals</span></a></li>
+                        <li class="nav-item "><a class="nav-link" href="/ui-typography.html"><span>Typography</span></a></li>
+                    </ul>
+                </div>
+                <i class="fas fa-user-plus"></i>
+            </li> -->
+                       
+            <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
+
+            {% if request.user|has_group:"dentiste" %}
+             <li class="nav-item">
+                <a href="{% url 'register' %}" class="nav-link d-flex align-items-center">
+                <span class="sidebar-icon">
+                   <span class="fas fa-user-plus text-info"></span>
+                </span>
+                <span class="mt-1">Ajouter utilisateur</span>
+                </a>
+            </li>
+            {% endif%}
+
+            <li class="nav-item">
+                <a href="/" class="nav-link d-flex align-items-center">
+                <span class="sidebar-icon">
+                    <img src="/static/assets/img/brand/dental-presentation-blue.png" height="40" width="40" alt="Dental Logo">
+                </span>
+                <span class="mt-1">Presentation</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-sign-out-alt text-danger"></span></span>
+                    <span>Logout</span>
+                </a>
+            </li> 
+           <!--  <li class="nav-item">
+                <a target="_blank" 
+                   href="https://github.com/app-generator/django-user-profile" class="nav-link d-flex align-items-center">
+                <span class="sidebar-icon">
+                    <span class="fas fa-download"></span>
+                </span>
+                <span class="mt-1">Source Code</span>
+                </a>
+            </li>  -->           
+           <!--  <li class="nav-item">
+                <a target="_blank"
+                   href="https://themesberg.com/product/django/volt-admin-dashboard-pro" class="nav-link d-flex align-items-center">
+                    <span class="sidebar-icon"><span class="fas fa-rocket text-danger"></span></span>
+                    <span>PRO Version</span>
+                </a>
+            </li> -->
+            </ul>
+        </div>
+    </nav>
+

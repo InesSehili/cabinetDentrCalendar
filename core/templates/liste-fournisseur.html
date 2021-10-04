@@ -1,0 +1,249 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+            
+           
+        </div>
+       
+        <div class="row">
+            <div class="col-12 col-xl-11 mb-4">
+                <div class="row">
+                    <div class="col-12 mb-4" >
+                        <div class="card border-light shadow-sm" >
+                            <div class="card-header" >
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                    <h2 class="h5">Fournisseurs</h2>
+                                    </div>
+                                    <div class="col text-right">
+                                      
+                        <button id="myButton"  type="submit" class="btn btn-warning mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false"> <span class="fas fa-plus mr-2"></span>Ajouter fournisseur</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive" style="height: 20rem;">
+                                <table class="table align-items-center table-flush" >
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Raison sociale</th>
+                                        <th scope="col">Tel</th>
+                                        <th scope="col">email</th>
+                                        <th scope="col">Nif</th>
+                                        <th scope="col">Nis</th>
+                                        <th scope="col">Rc</th>
+                                        <th scope="col">Total</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                        <th scope="col">Reste</th>
+                                        <th scope="col">Action</th>
+                                        <th></th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for fournisseur in list_fournisseur %}
+                                    <tr>
+                                        
+                                        <th scope="row">
+                                            {{fournisseur.raison_social}}
+                                        </th>
+                                        <td>
+                                            {{fournisseur.num_tel}}
+                                        </td>
+                                        <td>
+                                          {{fournisseur.email}}
+                                        </td>
+                                        <td>
+                                              {{fournisseur.nif}}
+                                        </td>
+                                        <td>
+                                              {{fournisseur.nis}}
+                                        </td>
+                                        <td>
+                                              {{fournisseur.rc}}
+                                        </td>
+                                        <td>
+                                              {{fournisseur.total_payement}}
+                                        </td>
+                                      
+                                        <td>
+                                              {{fournisseur.reste_paye}}
+                                        </td>
+
+                            <td>
+                                <div class="btn-group">
+                                   <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                        <form action="{% url 'fourmulaire_ajout_achat' %}" method="POST">
+                                {% csrf_token %}
+                     <input type="hidden" name="fournisseur" value="{{fournisseur.id}}">
+              
+     <button class="dropdown-item text-info" type="submit" ><span class="fas fa-money-bill-wave mr-2"></span>Bon de commande</button>
+                                        </form> 
+                                        <form action="{% url 'supprimer_fournisseur' %}" method="POST">
+                                {% csrf_token %}
+                     <input type="hidden" name="fournisseur" value="{{fournisseur.id}}">
+              
+     <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt"></span>Supprimer</button>
+                                        </form> 
+
+
+                                       
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </td>
+                             <td>
+                            More actions
+
+                            </td>
+
+
+                                    </tr>
+                                {% endfor %}
+                                 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+               
+                
+                </div>
+            </div>
+            
+        </div>
+         <div class="row">
+            <div class="col-12 col-xl-8 mb-4">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                    
+                                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Depenses</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Fournisseur</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h5">Depenses Fournisseurs</h2>
+                                    </div>
+                                    <div class="col text-right">
+                                      <h2 class="h5 text-success">Total = {{depense_fournisseur}} DZD</h2>
+                      
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Fournisseur</th>
+                                        <th scope="col">prix sortie</th>
+                                        <th scope="col">Date de depenses</th>
+                                        <th scope="col">Note</th>
+                                      
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                       
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for depense in list_depense_fournisseur %}
+                                    <tr>
+                                        
+                                        <th scope="row">
+                                             {{ depense.id}}
+                                        </th>
+                                        <td>
+                                           {{depense.fournisseur}}
+                                        </td>
+                                        <td>
+                                          {{depense.prix_sortie}}
+                                        </td>
+                                        <td>
+                                             {{depense.created_at}}
+                                        </td>
+                                        <td>
+                                              {{depense.note}}
+                                        </td>
+                                        
+
+                          
+
+
+                                    </tr>
+                                {% endfor %}
+                                 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+               
+                
+                </div>
+            </div>
+            
+        </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript">
+    
+    document.getElementById("myButton").onclick = function () {
+        location.href = "/ajouter-fournisseur.html";
+    };
+     document.getElementById("myButton2").onclick = function () {
+        location.href = "/ajouter-employee.html";
+    };
+
+
+
+</script>
+
+
+
+
+
+{% endblock javascripts %}

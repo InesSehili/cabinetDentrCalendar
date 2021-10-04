@@ -1,0 +1,320 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Traitement {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+       
+
+        <form action="{% url 'ajouter_traitement'%}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Remplissez vos traitements <span class="fas fa-tools"></span></h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="first_name">Nom de patient</label>
+                                    <input name="nom" class="form-control" id="first_name" type="text"
+                                           placeholder="{{nom}}" value="{{nom}}"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                               <div class="form-group">
+                                    <label for="last_name">Prenom de patient</label>
+                                    <input name="prenom" class="form-control" id="last_name" type="text"
+                                           placeholder="{{prenom}}" value="{{prenom}}"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                            <input type="hidden" name="consultation" value="{{consultation.id}}">
+                  
+                       
+                        <h2 class="h5 my-4">Traitements</h2>
+                        <div class="row align-items-center">
+                       
+                            <div class="col-md-6 mb-3">
+
+                                <div class="form-group">
+                                    
+                                    <label for="traitement"> Traitement</label>
+                                    <input name="traitement" class="form-control" id="traitement" type="text"
+                                           placeholder="Traitement" value=""  required >
+                                           
+
+                                       </div>
+                                
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                  
+                                    <label for="description_traitement"> Description traitement</label>
+                                
+                                    <textarea name="description_traitement" class="form-control" id="description_traitement" type="textarea"
+                                           placeholder="Description" value=""  required> Description</textarea>
+                                          
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            
+                    <div class="col-md-6 mb-3">
+
+                                <div class="form-group">
+                                    
+                                    <label for="prix_traitement"> Prix traitement</label>
+                                    <input name="prix_traitement" class="form-control" id="prix_traitement" type="number"
+                                           placeholder="Prix de traitement" value=""  required >
+                                           
+                                </div>
+                                
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    
+                                    <label for="etat_traitement"> Etat de traitement</label>
+                                     <select name="etat_traitement" class="form-select mb-0" id="etat_traitement"
+                                        aria-label="Etat de traitement" required>
+                                    <option selected value="A faire">A faire</option>
+                                    <option value="Valider">Valide</option>
+                                    
+                                </select>
+                               
+                                </div>
+                             </div>
+                             
+
+                        </div>
+                         <h2 class="h5 my-4">Numéro de dent <span class="fas fa-teeth"></span></h2>
+                           <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    
+                                    <label class="my-1 mr-2" for="country">Dent  </label>
+                                    <select name="dent" class="form-select" id="country" aria-label="Default select example">
+                                         <option value="" selected>Rien</option>
+                                        {% for dent in dent_list %}
+                                        <option value="{{dent.id}}">{{dent.num_dent}}</option>
+                                        {% endfor %}
+                                       
+                                    </select>
+                                    
+                                </select>
+                               
+                                </div>
+                             </div>
+                        
+                    
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- debut -->
+            <!--     <div class="col-18 col-xl-4">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="card border-light  p-8">
+                                 <img src="/static/assets/img/toothnumberingLR.jpg"
+                                         class=""
+                                         alt="Touth number" width=500, height=300> 
+                              
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div> -->
+                 <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="ct-chart-traffic-share ct-golden-section ct-series-a"></div>
+                            </div>
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <h2 class="h5 mb-3">Estimation du coût des traitements:</h2>
+                                
+                                <h6 class="font-weight-normal text-gray"><span class="icon w-20 icon-xs icon-secondary mr-1"> <span class="fas fa-users"></span></span> {{e_c_t_consultation}} {{espace}}   <a href="#" class="h6"><span class="icon w-20 icon-xs icon-secondary mr-1">  DZD</span> </a></h6>
+
+
+                             
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                        
+                        <div class="col-12">
+                           <!--  <div class="card card-body bg-white border-light shadow-sm mb-4"> -->
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-info">
+                                 <span  class="fas fa-tools fa-10x"></span>
+                              
+                            </div>
+                        </div>
+                    
+               
+                </div>
+                   
+            </div>
+
+                <!-- fin d'image de dents -->
+
+            </div>
+        </form>
+           <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0" style="height: 18rem;">
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Traitement</th> 
+                            <th>Dent</th>                      
+                            <th>Description</th>
+                            <th>Prix de traitement</th>
+                             <th>Prix payé</th>
+                              <th>Reste à payer</th>
+                            <th>Etat de traitement</th>
+                            <th>Date de création</th>
+                            <th>Date de modification</th>
+                            <th>Action</th>
+                            <th></th>
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for traitement in list_traitement%}
+                         {%if traitement.etat_traitement == "A faire"  %}
+                        <tr class="table-warning">
+                             {% endif %}
+                    {%if traitement.etat_traitement == "Valider"  %}
+                        <tr class="table-success">
+                             {% endif %}
+                               {%if traitement.etat_traitement == "Annuler"  %}
+                        <tr class="table-danger">
+                             {% endif %}
+
+                            <td>
+                                <a href="/static/assets/invoice.html" class="font-weight-bold">
+                                    {{traitement.id}}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-info">{{traitement.traitement}}</span>
+                            </td>
+                            <td><span class="font-weight-bold text-info ">{{traitement.dent.num_dent}}</span></td>                        
+            <td><span class="font-weight-bold text-info " >{{traitement.description_traitement}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{traitement.prix_traitement}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{traitement.prix_payer_traitement}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{traitement.reste_traitement}}</span></td>
+                             <td><span class="font-weight-normal text-info">{{traitement.etat_traitement}}</span></td>
+                            <td><span class="font-weight-bold text-info">{{traitement.created_at}}</span></td>
+                            <td><span class="font-weight-bold text-info">{{traitement.updated_at}}</span></td>
+                            
+
+
+                            <td>
+                                <div class="btn-group">
+                                     <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                                        
+                   {%if traitement.etat_traitement == "A faire"  %}
+
+         <form  action="{% url 'valider_traitement' %}" method="POST">
+         {% csrf_token %}
+         <input type="hidden" name="id_traitement" value="{{traitement.id}}">
+        <input type="hidden" name="prenom" value="{{prenom}}">
+         <input type="hidden" name="nom" value="{{nom}}">
+        <input type="hidden" name="consultation" value="{{consultation.id}}">
+        <input type="hidden" name="prix_traitement" value="{{traitement.prix_traitement}}">
+    <button class="dropdown-item text-success" type="submit">
+ <span class="fas fa-check mr-2"></span>Valider</button>
+                                        </form>
+                                         
+
+<form  action="{% url 'annuler_traitement' %}" method="POST">
+         {% csrf_token %}
+        <input type="hidden" name="id_traitement" value="{{traitement.id}}">
+        <input type="hidden" name="prenom" value="{{prenom}}">
+        <input type="hidden" name="nom" value="{{nom}}">
+                   
+        
+        <input type="hidden" name="consultation" value="{{consultation.id}}">
+        <input type="hidden" name="prix_traitement" value="{{traitement.prix_traitement}}">
+          <input type="hidden" name="etat_traitement" value="{{traitement.etat_traitement}}">
+                                            
+                                        <button class="dropdown-item text-danger" type="submit"><span class=" fas fa-times mr-2"></span>Annuler</button>
+                                        </form>
+                                        {% endif %}
+
+
+
+
+                                         <form  action="{% url 'supprimer_traitement' %}" method="POST">
+                                         {% csrf_token %}
+                                         <input type="hidden" name="id_traitement" value="{{traitement.id}}">
+                                         <input type="hidden" name="prenom" value="{{prenom}}">
+                                        <input type="hidden" name="nom" value="{{nom}}">
+                   
+        
+                                        <input type="hidden" name="consultation" value="{{consultation.id}}">
+                          <input type="hidden" name="prix_traitement" value="{{traitement.prix_traitement}}">
+                            <input type="hidden" name="etat_traitement" value="{{traitement.etat_traitement}}">
+                                            
+                                        <button class="dropdown-item text-danger" type="submit"><span class=" fas fa-trash-alt mr-2"></span>supprimer</button>
+                                        </form>
+                                       
+
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                            <td>More action</td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

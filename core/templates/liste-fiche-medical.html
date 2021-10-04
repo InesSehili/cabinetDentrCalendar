@@ -1,0 +1,202 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Fiche medical {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Fiches medicales</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Toutes les fiches medicales</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4">Toutes les fiches medicales</h2>
+                    <p class="mb-0">Pour plus d'option cliquer sur la rubrique actions</p>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-4">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput"  placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0" style="height: 20rem;">
+                <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                           
+                            <th>Nom</th>                       
+                            <th>Prenom</th>
+                            <th>Groupage</th>
+                            <th>antecF</th>
+                            <th>antecC</th>
+                            <th>antecM</th>
+                            <th>antecA</th>
+                               <th> Action</th>
+                             
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for fiche_medicale in fiches_medical_list %}
+                        <tr>
+                            <td>
+                                <a href="/static/assets/invoice.html" class="font-weight-bold text-info">
+                                    {{fiche_medicale.id}}
+                                </a>
+                            </td>
+                           
+                            <td>
+                                <span class="font-weight-bold text-info">{{fiche_medicale.patient.nom}}</span>
+                            </td>
+                            <td><span class="font-weight-bold text-info">{{fiche_medicale.patient.prenom}}</span></td>                        
+                            <td><span class="font-weight-bold text-info">{{fiche_medicale.groupage}}</span></td>
+                            
+                            <td><span class="font-weight-bold
+                             text-info">{{fiche_medicale.antecF}}</span></td>
+                            <td><span class="font-weight-bold text-info">{{fiche_medicale.antecC}}</span></td>
+                        <td><span class="font-weight-bold text-info">{{fiche_medicale.antecM}}</span>
+                        </td>
+                         <td><span class="font-weight-bold text-info">{{fiche_medicale.antecA}}</span>
+                        </td>
+
+
+                            <td>
+                                <div class="btn-group">
+                                    <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                                        <form  action="{%url 'afficher_fiche_medical' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="nom" value="{{fiche_medicale.patient.nom}}">
+                                             <input type="hidden" name="prenom" value="{{fiche_medicale.patient.prenom}}">
+                                
+                                                  <input type="hidden" name="id" value="{{fiche_medicale.patient.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-eye mr-2"></span>Afficher detail</button>
+                                        </form>
+
+
+                                        <form action="{% url 'modifier_fiche_medical' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="nom" value="{{patient.nom}}">
+                                             <input type="hidden" name="prenom" value="{{patient.prenom}}">
+                                              <input type="hidden" name="id" value="{{fiche_medicale.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-edit mr-2"></span>Modifier fiche medical
+                                            </button> 
+                                            </form>
+
+
+                                        <form action="{% url 'supprimer_fiche_medical' %}" method="POST">
+                                             {% csrf_token %}
+                                             <input type="hidden" name="id_patient" value="{{fiche_medicale.patient.id}}">
+            
+
+
+                                            <input type="hidden" name="id" value="{{fiche_medicale.id}}">
+                                        <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                              <td>
+                            More actions
+
+                            </td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript">
+        const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[1];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1)
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+    
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock javascripts %}

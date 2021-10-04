@@ -1,0 +1,214 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Radio {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Radios</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Toutes les radios</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4"> Liste Radios du patient : {{nom}}  {{prenom}}</h2>
+                    <p class="mb-0">Pour plus d'option cliquer sur la rubrique actions</p>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-4">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                     <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                        <form  action="{% url 'formulaire_ajout_radio'%}" method="POST">
+                                   {% csrf_token %}
+                                      <input type="hidden" name="nom" value="{{nom}}">
+                                      <input type="hidden" name="prenom" value="{{prenom}}">
+                                     <input type="hidden" name="patient" value="{{patient}}">
+                                     <button  type="submit" class="btn btn-info mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-plus mr-2"></span>New
+                </button>
+                                 </form>
+                        
+
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 20rem;">
+                <table class="table table-hover"  id="myTable">
+                    <thead>
+                        <tr>
+                            
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Titre</th> 
+                             <th>Observation</th>                      
+                           
+                            <th>Prix radio</th>
+                             <th>Prix payé</th>
+                            <th>Reste à payer</th>
+                           
+                             <th>Radio</th>
+                            
+                             
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for radio in radio_liste %}
+                        <tr>
+                            <td>
+                                <span class="font-weight-bold text-info">{{radio.patient.nom}}</span>
+                            </td>
+                           
+                            <td>
+                                <span class="font-weight-bold text-info">{{radio.patient.nom}}</span>
+                            </td>
+                                                    
+                            <td><span class="font-weight-normal text-info">{{radio.titre_radio}}</span></td>
+                             <td><span class="font-weight-normal text-info">{{radio.observation}}</span></td>
+                            
+                           
+                              <td><span class="font-weight-normal text-info">{{radio.prix_radio}} DA</span></td>
+                              <td><span class="font-weight-normal text-success">{{radio.prix_paye}} DA</span></td>
+
+                              <td><span class="font-weight-normal text-danger">{{radio.reste}} DA</span></td>
+                                   
+                                     <td>
+                                        <!--<span class="font-weight-normal text-danger">{{radio.radio_pdf.url}}</span>-->
+                                     <!-- <iframe src="{{radio.radio_pdf.url}}" type="application/pdf"   height="300px" width="100%"></iframe> -->
+                                     <a href="{{radio.radio_pdf.url}}" target="_blank" class="text-danger"><span class="fas fa-eye"></span>Voir Radio</a> 
+                           </td> 
+
+
+                            <td>
+                                <div class="btn-group">
+                                   <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                             <form action="{% url 'supprimer_radio' %}" method="POST">
+                    {% csrf_token %}
+             <input type="hidden" name="id-radio" value="{{radio.id}}">
+              <input type="hidden" name="id-patient" value="{{radio.patient.id}}">
+                                            
+                                        <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt"></span>Supprimer</button>
+                                        </form>
+                                      <form  action="{% url 'afficher_radio' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="nom" value="{{radio.patient.nom}}">
+                                             <input type="hidden" name="prenom" value="{{radio.patient.prenom}}">
+                                              <input type="hidden" name="id_radio" value="{{radio.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-eye mr-2"></span>Afficher Radio</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </td>
+                              <td>
+                            More actions
+
+                            </td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript">
+    
+  const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[2];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1)
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock javascripts %}

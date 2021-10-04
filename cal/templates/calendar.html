@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Palnning {% endblock %} 
+
+{% block content %}
+ <main class="content">
+ 	 {% include 'includes/navigation.html' %}
+<div class="clearfix">
+	<a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}">Le Mois Précédent </a>
+	<a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Le Mois Prochain </a>
+	<a class="btn btn-info right" href="{% url 'cal:event_new' %}"> Nouveau RDV </a>
+</div>
+
+{{ calendar }}
+
+        {% include 'includes/footer.html' %}
+  </main>
+
+{% endblock content %}
+
+ {% include 'includes/footer.html' %}
+ {% block javascripts %}{% endblock javascripts %}

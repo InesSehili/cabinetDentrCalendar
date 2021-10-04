@@ -1,0 +1,345 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Consultation {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Consultaions</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Toutes les consultations</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4">Consultations du patient : {{nom}} {{prenom}}</h2>
+                    <p class="mb-0">Pour plus d'information cliquer sur la rubrique actions</p>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group">
+                         <form action="{% url 'liste_consultation_patient_payees' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{id}}">
+                             <input type="hidden" name="nom" value="{{nom}}">
+                             <input type="hidden" name="prenom" value="{{prenom}}">
+
+
+                        <button  class="btn btn-sm btn btn-outline-success" type="submit">Payées</button>
+                        </form>
+                         <form action="{% url 'liste_consultation_patient_non_payees' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{id}}">
+                             <input type="hidden" name="nom" value="{{nom}}">
+                             <input type="hidden" name="prenom" value="{{prenom}}">
+
+                        <button class="btn btn-sm btn-outline-danger" type="submit">Reste à payées</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-4">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput"  placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                        <form  action="{% url 'formulaire_creation_consultation'%}" method="POST">
+                                   {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+                   
+                                     <button  type="submit" class="btn btn-info mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-plus mr-2"></span>New
+                </button>
+                                 </form>
+                        
+
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0" style="height: 18rem;">
+                <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date de consultaion</th>
+                            <th>Nom</th>                       
+                            <th>Prenom</th>
+                            <th>Prix définis</th>
+                            <th>Prix payé</th>
+                            <th>Reste</th>
+                            <th>Action</th>
+                            <th></th>
+                             
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for consultation in consultation_list_patient %}
+                        {%if consultation.reste == 0  %}
+                         <tr class="table-success" >
+                            {% endif %}
+                             {%if consultation.reste != 0  %}
+                             
+                        <tr class="table-danger" >
+                             {% endif %}
+                            <td>
+                                <a href="/static/assets/invoice.html" class="font-weight-bold">
+                                    {{consultation.id}}
+                                </a>
+                            </td>
+                            <td><span class="font-weight-normal">{{consultation.created_at}}</span></td>
+                            <td>
+                                <span class="font-weight-normal">{{consultation.patient.nom}}</span>
+                            </td>
+                            <td><span class="font-weight-normal">{{consultation.patient.prenom}}</span></td>                        
+                            <td><span class="font-weight-normal">{{consultation.prix_defini}}</span></td>
+                            
+                            <td><span class="font-weight-normal text-primary">{{consultation.prix_paye}}</span></td>
+                            <td><span class="font-weight-normal">{{consultation.reste}}</span></td>
+
+
+                            <td>
+                                <div class="btn-group">
+                                   <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                                        {% if consultation.diagnostique_existe is False %}
+                                        <form  action="{% url 'formulaire_creation_diagnostique' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="nom" value="{{consultation.patient.nom}}">
+                                             <input type="hidden" name="prenom" value="{{consultation.patient.prenom}}">
+                                              <input type="hidden" name="id_consultation" value="{{consultation.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-diagnoses"></span>Ajouter diagnostique</button>
+                                        </form>
+                                        {% endif %}
+
+                                        {% if consultation.diagnostique_existe is True %}
+                                           <form  action="{% url 'afficher_diagnostique' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="nom" value="{{nom}}">
+                                             <input type="hidden" name="prenom" value="{{prenom}}">
+                                              <input type="hidden" name="id_consultation" value="{{consultation.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-diagnoses"></span>Afficher diagnostique</button>
+                                        </form>
+                                          {% endif %}
+                                           <!-- c pour les traitement-->
+                                      {% if consultation.traitement_existe is False %}
+                 <form action="{% url 'formulaire_creation_traitement'%}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{consultation.id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+
+
+                  <button type="submit"class="dropdown-item"> <span class="fas fa-tools"></span>Ajouter traitement</button>
+                  </form>
+                                      
+                                        {% endif %}
+                                        {% if consultation.traitement_existe is True %}
+                        <form action="{% url 'formulaire_creation_traitement'%}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{consultation.id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+
+
+                  <button type="submit"class="dropdown-item"> <span class="fas fa-tools"></span>Afficher traitement</button>
+                  </form>
+                                         
+                                          {% endif %}
+
+
+                                          <!-- Fin de traitements -->
+                                           <!-- c pour les ordonances-->
+                                      {% if consultation.ordonance_existe is False %}
+                 <form action="{% url 'formulaire_creation_ordonance' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{consultation.id}}">
+                  <input type="hidden" name="nom" value="{{consultation.patient.nom}}">
+                  <input type="hidden" name="prenom" value="{{consultation.patient.prenom}}">
+
+
+                  <button type="submit"class="dropdown-item"> <span class="fas fa-file-medical-alt mr-2"></span>Créer ordonance</button>
+                  </form>
+                                      
+                                        {% endif %}
+                                        {% if consultation.ordonance_existe is True %}
+                        <form action="{% url 'liste_ordonance'%}" method="POST">
+                  {% csrf_token %}
+                
+
+
+                  <button type="submit"class="dropdown-item"> <span class="fas fa-file-medical-alt"></span>Afficher ordonance</button>
+                  </form>
+                                         
+                                          {% endif %}
+
+
+                                          <!-- Fin de traitements -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <form action="{% url 'modifier_consultation' %}" method="POST">
+                                            {% csrf_token %}
+                     <input type="hidden" name="nom" value="{{consultation.patient.nom}}">
+                    <input type="hidden" name="prenom" value="{{consultation.patient.prenom}}">
+         <input type="hidden" name="id" value="{{consultation.id}}">
+    <button class="dropdown-item" type="submit"><span class="fas fa-edit mr-2"></span>Modifier prix
+                                            </button> 
+                                            </form>
+
+
+
+
+
+
+                                        
+                        <form action="{% url 'supprimer_consultation'%}" method="POST">
+                                             {% csrf_token %}
+
+
+                            <input type="hidden" name="id" value="{{consultation.id}}">
+                        <input type="hidden" name="patient" value="{{consultation.patient.id}}">
+                            <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                             <td>
+                            More actions
+
+                            </td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script type="text/javascript">
+        const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[2];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1)
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+    
+
+  
+
+
+
+</script>
+
+
+
+{% endblock javascripts %}

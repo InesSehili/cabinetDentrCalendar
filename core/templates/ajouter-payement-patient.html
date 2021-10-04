@@ -1,0 +1,243 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Payement {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+       <!--  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+            <div>
+               
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-left mt-2">
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="far fa-f
+                        ile-alt mr-2"></span>Document</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="far fa-comment-dots mr-2"></span>Message</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-box-open mr-2"></span>Product</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item font-weight-bold" href="#"><span
+                            class="fas fa-rocket text-danger mr-2"></span>Subscription Plan</a>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary mr-2"><span class="fas fa-calendar-alt"></span></button>
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <span class="fas fa-clipboard mr-2"></span>Reports
+                    <span class="icon icon-small ml-1"><span class="fas fa-chevron-down"></span></span>
+                </button>
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-left mt-2">
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-box-open mr-2"></span>Products</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-store mr-2"></span>Customers</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-cart-arrow-down mr-2"></span>Orders</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-chart-pie mr-2"></span>Console</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item font-weight-bold" href="#"><span
+                            class="fas fa-rocket text-success mr-2"></span>All Reports</a>
+                </div>
+            </div>
+        </div> -->
+
+    <form action="{% url 'ajouter_payement' %}" method="POST" enctype= multipart/form-data>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Ajouter payement
+                         <span class="fas fa-cash-register text-warning"></span></h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="first_name">Nom de patient</label>
+                                    <input  class="form-control" id="first_name" type="text"
+                                    name="nom"
+                                           placeholder="{{p.nom}}" value="{{p.prenom}}"
+                                           disabled>
+                                          
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="last_name">Prenom de patient</label>
+                                    <input  class="form-control" id="last_name" type="text"
+                                           placeholder="{{p.prenom}}" name="prenom" value="{{p.prenom}}"
+                                           disabled>
+                                          
+                                </div>
+                                <input type="hidden" name="patient" value="{{patient}}">
+                            </div>
+                        </div>
+                        <div class="row ">
+                            
+                   <div class="col-md-12 mb-3">
+                                <div class="form-group">
+                                    
+                  <label class="my-1 mr-2" for="payement_de">Payement de</label>
+                    
+         <select name="payement_de" class="form-select" id="payement_de" aria-label="Default select example" required>
+                                        <option >Selectionner la raison du payement</option>
+                         {% for consultation_non_payees in liste_consultation_non_payees %}
+                            <option value="Consultation {{consultation_non_payees.id}}">Consultation : {{consultation_non_payees.created_at}}, {{consultation_non_payees.reste}} DA</option>
+                            {% endfor %}
+                        {% for radio_non_payees in liste_radio_non_payees %}
+                            <option value="Radio {{radio_non_payees.id}}"> Radio : {{radio_non_payees.created_at}}, {{radio_non_payees.reste}} DA</option>
+                            {% endfor %}
+                            {% for traitement_non_payees in liste_traitement_non_payees %}
+                            <option value="Traitement {{traitement_non_payees.id}}"> Traitement : {{traitement_non_payees.created_at}}, {{traitement_non_payees.reste_traitement}} DA</option>
+                            {% endfor %}
+                       </select>
+                                
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="titre-radio">Prix payé</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"></span>
+                                     <input name="prix_payer" class="form-control" id="prix_payer" type="number"
+                                           placeholder="" value="0"
+                                           required>
+                                    
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+                          <input type="hidden" name="user" value=" {{ request.user.username }}">
+                        
+                         
+                    
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-12 col-xl-4">
+                    <div class="row">
+                        <!-- <div class="col-12 mb-4">
+                            <div class="card border-light text-center p-0">
+                                <div class="profile-cover rounded-top"
+                                     data-background="/static/assets/img/profile-cover.jpg"></div>
+                                <div class="card-body pb-5">
+                                    <img src="{{ profile.get_avatar }}"
+                                         class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
+                                         alt="Neil Portrait">
+                                    <h4 class="h3">{{ profile.user.username }}</h4>
+                                    <h4 class="font-weight-normal">{{ profile.user.get_full_name }}</h4>
+                                    <h5 class="font-weight-normal">
+                                        {{ request.user.email }}
+                                    </h5>
+                                    <p class="text-gray mb-4">{{ profile.address|default:'' }}</p>
+                                    <a class="btn btn-sm btn-primary mr-2" href="#"><span
+                                            class="fas fa-user-plus mr-1"></span> Connect</a>
+                                    <a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                           <!--  <div class="card card-body bg-white border-light shadow-sm mb-4"> -->
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-info">
+                                 <span  class="fas fa-cash-register fa-10x"></span>
+                              <!--   <h2 class="h5 mb-4">Select profile photo</h2>
+                                <div class="d-xl-flex align-items-center">
+                                    <div class="file-field">
+                                        <div class="d-flex justify-content-xl-center ml-xl-3">
+                                            <div class="d-flex">
+                                                <span class="icon icon-md">
+                                                    <span class="fas fa-paperclip mr-3"></span>
+                                                </span>
+                                                <input name="avatar" type="file">
+                                                <div class="d-md-block text-left">
+                                                    <div class="font-weight-normal text-dark mb-1">Choose Image</div>
+                                                    <div class="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </form>
+
+        <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                            <th>Nom</th> 
+                            <th>Prenom</th>                      
+                            <th>Prix payé</th>
+                            <th>Date de paymenet</th>
+                            <th>User</th>
+                            <th>Note</th>
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                             {% for payement in list_payement%}
+                        
+                        <tr>
+                      
+
+                            <td>
+                                <a href="/static/assets/invoice.html" class="font-weight-bold">
+                                    {{ payement.id}}
+                                    
+                                </a>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-info">{{payement.patient.nom}}</span>
+                            </td>
+                            <td><span class="font-weight-bold text-info ">{{payement.patient.prenom}}</span></td>                        
+            <td><span class="font-weight-bold text-info " >{{payement.prix_payer}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{payement.created_at}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{payement.user}}</span></td>
+                             <td><span class="font-weight-normal text-info">{{payement.payement_de}}</span></td>
+                            
+                            
+
+
+                          
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,215 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Achat {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+
+        <form action="{% url 'ajouter_depense' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Formulaire de nouveaux depenses <span class="fas fa-comments-dollar"></span> :</h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                               
+                                <label for="gender">Raison de payement</label>
+                                <select name="raison_payement" class="form-select mb-0" id="gender"
+                                        aria-label="Gender select example">
+                                   
+                                    <option value="Employés">Employés</option>
+                                  
+                                    
+                                    
+                                </select>
+                            </div>
+                          
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    
+                                   <label for="matiere">Prix sorti</label>
+                                    <input name="prix_sortie" class="form-control" id="matiere" type="number"
+                                           placeholder="Prix" value=""
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                          <div class="col-md-6 mb-3">
+                                <label for="gender"> Employé</label>
+                                <select name="employee" class="form-select mb-0" id="gender"
+                                        aria-label="Gender select example">
+                                    <option selected>Employé</option>
+                                    {%for employee in list_employee%}
+                                    <option value="{{employee.id}} - {{employee.nom}} , {{employee.prenom}}">{{employee.nom}} {{employee.prenom}}</option>
+
+                                    {% endfor %}
+                                    
+                                    
+                                    
+                                </select>
+                            </div>
+                            </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-12 mb-3">
+                                <label for="date_consultation">Note</label>
+                                  <textarea name="note" class="form-control" id="observation" type="textarea"
+                                           placeholder="Observation" value=""  > Note</textarea>
+                            </div>
+                  
+                        </div>
+
+                     
+                    
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </form>
+             {% if list_depense %}
+         <div class="card card-body bg-white border-light shadow-sm mb-4">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Depenses</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Employés</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4">Liste de depenses Employés</h2>
+                    <p class="mb-0"></p>
+                </div>
+               
+            </div>
+   
+            <table class="table table-hover" id="myTable">
+
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                            <th>Raison</th> 
+                            <th>prix sortie</th> 
+                             <th>Date de depenses</th>     
+                             <th>Note</th>                                       
+                           
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                             {% for depense in list_depense %}
+                             
+                             
+                        <tr >
+                            
+                      
+
+                            <td>
+                                <a href="#" class="font-weight-bold">
+                                    {{ depense.id}}
+                                    
+                                </a>
+                            </td>
+                            <td>
+                               <span class="font-weight-bold text-info">{{depense.raison_payement}}
+                                    {%if depense.raison_payement == 'Employés' %}
+                                   : {{ depense.employee}}
+                                    {% endif %}
+
+
+
+                                </span>
+                            </td>
+                            <td><span class="font-weight-bold text-info ">{{depense.prix_sortie}}</span></td>
+                            <td><span class="font-weight-bold text-info ">{{depense.created_at}}</span></td>                      
+            <td><span class="font-weight-bold text-info " >{{depense.note}}</span></td>
+                   
+
+                            <td>
+                                <div class="btn-group">
+                                    <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                         {%if  depense.raison_payement != 'fournisseur' %}
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+
+                                   
+                                       
+            <form action="{% url 'supprimer_depense'%}" method="POST">
+                                            {% csrf_token %}
+                                            
+                <input type="hidden" name="id_depense" value=" {{depense.id}}">
+               
+        <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt"></span>supprimer 
+                                            </button> 
+                                            </form> 
+
+
+                                              {% endif %}
+
+
+
+
+
+
+                                        
+                        
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                            More actions
+
+                            </td>
+                            
+                            
+
+
+                          
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+
+               
+            </div>
+            {% endif %}
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,222 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Rendez-vous {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Rendez-vous</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">liste rendez-vous</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4">Tous les rendez-vous</h2>
+                    <p class="mb-0">Modifier l'etat des rendez-vous dans la rubrique actions</p>
+                      <div class="btn-toolbar mb-2 mb-md-0">
+
+                         <a href="{% url 'formulaire_ajout_type_rdv' %}" class="btn btn-sm btn-outline-success">Types de RDV</a>
+                         
+                    
+                </div>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-primary">En cours</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary">Tous</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-4">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput"  placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                       
+                        <a href = "{% url 'ajouter_rdv_formulaire' %}" class="btn btn-info  mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-plus mr-2"></span>New
+                </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 50rem;">
+                <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>                       
+                            <th>Prenom</th>
+                            <th>type de rendez-vous</th>
+                            <th>Date de rendez-vous</th>
+                            <th>Date de fin de rendez-vous</th>
+                            <th>Status</th>
+                             
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for rdv in rdv_list %}
+                        <tr>
+                            <td>
+                                <a href="/static/assets/invoice.html" class="font-weight-bold">
+                                    {{rdv.id}}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-info">{{rdv.nom}}</span>
+                            </td>
+                            <td><span class="font-weight-bold text-info">{{rdv.prenom}}</span></td>                        
+                            <td><span class="font-weight-bold text-info">{{rdv.type_rdv}}</span></td>
+                            <td><span class="font-weight-normal text-info">{{rdv.date_rdv}}</span></td>
+                            <td><span class="font-weight-bold text-info">{{rdv.date_fin}}</span></td>
+                            {%if rdv.statut == "en cours"%}
+
+                             <td><span class="font-weight-bold  text-secondary ">{{rdv.statut}}</span></td>
+                             {%endif%}
+                              {%if rdv.statut != "en cours"%}
+
+                             <td><span class="font-weight-bold  text-success ">{{rdv.statut}}</span></td>
+                             {%endif%}
+                    
+                    
+
+                            
+                            
+
+
+                            <td>
+                                <div class="btn-group">
+                                  <div class="dropdown dropdown-toggle-split m-0 p-0">
+                                    <button class="dropbtn">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-content">
+                                         {%if rdv.statut == "en cours"%}
+                                         <form action="{% url 'confirmer_rdv'%}" method="POST">
+                                            {% csrf_token %}
+                                             <input type="hidden" name="id" value="{{rdv.id}}">
+                                             <button class="dropdown-item text-success" type="submit"> <span class="fas fa-eye mr-2"></span>Confirmer</a></button>
+
+                                         </form>
+                                        <!-- <a class="dropdown-item text-success" href="/static/assets/invoice.html"><span class="fas fa-eye mr-2"></span>Confirmer</a> -->
+                                        {%endif%}
+                                         {%if rdv.statut != "en cours"%}
+                                         <form action="{%url 'ajouter_patients_rdv'%}" method="POST">
+                                            {% csrf_token %}
+                                             <input type="hidden" name="id" value="{{rdv.id}}">
+                                             <input type="hidden" name="nom" value="{{rdv.nom}}">
+                                             <input type="hidden" name="prenom" value="{{rdv.prenom}}">
+                                             <button class="dropdown-item text-success" type="submit"> <span class="fas fa-plus mr-2"></span>Enregister Patient</a></button>
+
+                                         </form>
+                                        <!-- <a class="dropdown-item text-success" href="/static/assets/invoice.html"><span class="fas fa-eye mr-2"></span>Confirmer</a> -->
+                                        {%endif%}
+                    
+                                        <a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a>
+                                        <form action="{% url 'supprimer_rdv'%}" method="POST">
+                                             {% csrf_token %}
+                                              <input type="hidden" name="id" value="{{rdv.id}}">
+                                        <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>More actions</td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+             
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+
+<script type="text/javascript">
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[1];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1)
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    document.getElementById("myButton").onclick = function () {
+        location.href = "/ajouter-rdv.html";
+    };
+</script>
+
+{% endblock javascripts %}

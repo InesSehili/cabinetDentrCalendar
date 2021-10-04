@@ -1,0 +1,147 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Diagistique {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      <div class="preloader bg-soft flex-column justify-content-center align-items-center">
+        <img class="loader-element animate__animated animate__jackInTheBox" src="/static/assets/img/brand/dental-presentation-blue.png" height="300" alt="Dental App">
+      </div>
+
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="#">Consultation</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Afficher diagnostique</li>
+              </ol>
+          </nav>
+          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                  <h1 class="h4">Details diagnostique</h1> 
+                  <p class="mb-0">Voici le detail de diagnostique.</p>
+
+
+                
+             
+              </div>
+                  
+
+              
+          </div>
+         
+      </div>
+
+      <div class="row">
+          <div class="col-8 mb-4">
+              <div class="card border-light shadow-sm components-section">
+                  <div class="card-body">     
+                     
+                      <!-- Title  -->
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="mb-5">
+                                  <h2 class="h5 mb-3">Informations diagostique patient: </h2>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- End of Title -->
+                      <div class="row mb-4 mb-lg-5">
+                      
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Nom et prenom :</span>
+                              </div>
+                              
+                              <p class="lead text-info ">{{nom}} {{prenom}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Nom médecin :</span>
+                              </div>
+                              
+                              <p class="lead text-info ">{{nom_medecin}} 
+                              </p>
+                          </div>
+                        
+                      </div>
+                          <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Diagnostique :</span>
+                              </div>
+                              <p class="lead text-info">{{diagnostique}}
+                              </p>
+                          </div>
+                           <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Date de diagnostique :</span>
+                              </div>
+                              <p class="lead text-info">{{created_at}}
+                              </p>
+                          </div>
+                          
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Observation:</span>
+                              </div>
+                              <p class="lead text-info">{{observation}}
+                              </p>
+                          </div>
+                          
+                                                  
+                      </div>
+                      <div class="row mb-4 mb-lg-5">
+                          
+                          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                
+                  <form action="{% url 'supprimer_diagnostique'%}" method="POST">
+                      {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="id_patient" value="{{consultation.patient.id}}">
+
+                  <input type="hidden" name="nom" value="{{consultation.patient.nom}}">
+                  <input type="hidden" name="prenom" value="{{consultation.patient.prenom}}">
+
+            
+                   <button class="btn btn-outline-danger" type="submit">Supprimer</button>
+                   </form>
+            
+                  
+                  
+              </div>
+              <!-- <div>
+                 <form action="#" method="POST">
+                    {% csrf_token %}
+                  <input type="hidden" name="id" value="{{id}}">
+                  <input type="hidden" name="nom" value="{{nom}}">
+                  <input type="hidden" name="prenom" value="{{prenom}}">
+              
+                  <button type="submit" class="btn btn-outline-gray"> Modifier Diagnostique</button>
+                  </form>
+              </div> -->
+          </div>                 </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+    </main>
+                                    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
