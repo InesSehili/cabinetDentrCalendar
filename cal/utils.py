@@ -32,7 +32,7 @@ class Calendar(HTMLCalendar):
 	def formatmonth(self, withyear=True):
 		events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
 
-		cal = f' <table class="table table-hover"  id="myTable">\n'
+		cal = f' <table class="table table-hover table-warning"  id="myTable">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):

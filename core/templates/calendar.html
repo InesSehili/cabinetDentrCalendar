@@ -13,7 +13,7 @@
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
             <div class="btn-toolbar dropdown">
-                <a class="btn btn-primary btn-sm mr-2"href="{% url 'cal:event_new' %}">
+                <a class="btn btn-primary btn-sm mr-2"href="{% url 'ajouter_rdv' %}">
                     <span class="fas fa-plus mr-2"></span>Nouveau rendez-vous
                 </a>
            
@@ -37,8 +37,11 @@
                 <div class="card bg-yellow-alt shadow-sm">
                   
                     <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+
                        
-                             <table class="table table-hover" >
+                             <table >
+
+
                                            <tbody>
 
                   
@@ -47,6 +50,21 @@
                           
                      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
     <a class="btn btn-secondary text-dark btn-sm mr-2 left" href="{% url 'cal:calendar' %}?{{ prev_month }}"><span class="fas fa-angle-double-left mr-2"></span> </a>
+
+
+                <div class="card-header d-flex flex-row align-items-center flex-0">
+                <div class="d-block">
+                 <div class="h5 font-weight-normal mb-2">Planning de mois <span class="far fa-calendar-alt"> </div>
+                            <h2 class="h3">{% now "jS F Y H:i" %}</h2>
+                          
+                        </div>
+                        </div>
+                        
+
+
+
+
+
     <a class="btn btn-secondary text-dark btn-sm mr-2 right" href="{% url 'cal:calendar' %}?{{ next_month }}"> <span class="fas fa-angle-double-right mr-2"></span> </a>
    
    
