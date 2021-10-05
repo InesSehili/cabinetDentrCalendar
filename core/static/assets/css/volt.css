@@ -355,6 +355,7 @@ th {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
+    
 }
 
 label {
@@ -2703,7 +2704,7 @@ progress {
     color: var(--bs-table-active-color);
 }
 
-.table-hover > tbody :hover {
+.table-hover > tbody > tr:hover {
     --bs-table-accent-bg: var(--bs-table-hover-bg);
     color: var(--bs-table-hover-color);
 }
@@ -2766,6 +2767,7 @@ progress {
     --bs-table-hover-color: #262B40;
     color: #262B40;
     border-color: #e7d8c3;
+
 }
 
 .table-danger {
