@@ -19,9 +19,15 @@ def ajouter_rdv(request):
 		date_fin_str = request.POST.get('date_fin')
 		print(" date_fin", date_fin_str)
 		date_debut = dt.datetime.strptime(date_debut_str, '%Y-%m-%dT%H:%M')
+		date_debut_evenement = date_debut.strftime("%H:%M")
+		print(date_debut_evenement)
+		
+
+
 		date_fin = dt.datetime.strptime(date_fin_str, '%Y-%m-%dT%H:%M')
 		print("date_debut", date_debut)
 		print("date_fin", date_fin)
+		nom_patient = request.POST.get('nom')
 		if date_debut > date_fin:
 			messages.error(request, "Date de debut ou de fin erroné")
 			return render(request, 'ajouter-rdv.html', {'segment':'rdvs'})
@@ -39,6 +45,9 @@ def ajouter_rdv(request):
 		if form.is_valid():
 			print("form is valid")
 			rdv = form.save()
+			evenement = Event(title = ''+nom_patient+' : '+date_debut_evenement+'',start_time=date_debut,end_time=date_fin )
+			print("evenement = ",evenement.title)
+			evenement.save()
 			messages.success(request, 'Rendez-vous a été bien ajouté')
 			return render(request, 'ajouter-rdv.html', {'segment':'rdvs'})
 		else:
