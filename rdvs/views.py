@@ -8,6 +8,7 @@ import datetime as dt
 from django.contrib.auth.decorators import login_required
 from patients.models import Patient
 from typerdvs.models import Typerdv
+from cal.models import Event
 
 
 @login_required(login_url="/login/")
