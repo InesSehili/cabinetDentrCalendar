@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include  # add this
 from patients.views import ajouter_patient, liste_patient, archiver_patient, afficher_detail_patient, liste_patient_archiver, supprimer_patient, desarchiver_patient, supprimer_patient, liste_patient_payees, liste_patient_non_payees
-from rdvs.views import liste_rdv, ajouter_rdv, confirmer_rdv, ajouter_patient_from_rdv, supprimer_rdv, list_rdv_toDay, list_rdv_week, list_rdv_month, ajouter_rdv_formulaire
+from rdvs.views import liste_rdv, modifier_rdv, ajouter_rdv, confirmer_rdv, ajouter_patient_from_rdv, supprimer_rdv, list_rdv_toDay, list_rdv_week, list_rdv_month, ajouter_rdv_formulaire
 from consultations.views import  ajouter_consultation, modifier_prix_consultation,  modifier_consultation, liste_consultation, formulaire_creation_consultation, liste_consultation_non_payees, liste_consultation_patient, supprimer_consultation, liste_consultation_payees, liste_consultation_patient_payees, liste_consultation_patient_non_payees
 from fichesMedical.views import modifier_fiche_medical, modifier_contenu_fiche_medical, formulaire_creation_fiche_medical, liste_fiche_medical, ajouter_fiche_medical, supprimer_fiche_medical, afficher_fiche_medical
 from diagnostiques.views import ajouter_diagnostique, afficher_diagnostique, formulaire_creation_diagnostique,  modifier_diagnostique_formulaire, supprimer_diagnostique
@@ -31,6 +31,7 @@ urlpatterns = [
     path('patients',liste_patient, name="patients"),
     path('rdvs', liste_rdv, name="rdvs"),
     path('ajouter_rdv', ajouter_rdv, name="ajouter_rdv"),
+    path(r'^modifier_rdv/(?P<event_id>\d+)/$', modifier_rdv, name="modifier_rdv"),
     path('confirmer_rdv',confirmer_rdv, name="confirmer_rdv"),
     path('ajouter_patients_rdv',ajouter_patient_from_rdv, name="ajouter_patients_rdv"),
     path('archiver_patient',archiver_patient, name="archiver_patient"),

@@ -27,15 +27,15 @@
             <li class="nav-item  {% if 'list_rdv' in segment %} active {% endif %}">
                 <a href="{% url 'cal:calendar' %}" class="nav-link">
                 <span class="sidebar-icon"><span class="far fa-calendar-alt"></span></span>
-                <span>Planning2 </span>
+                <span>Planning </span>
                 </a>
             </li>
-            <li class="nav-item  {% if 'list_rdv' in segment %} active {% endif %}">
+           <!--  <li class="nav-item  {% if 'list_rdv' in segment %} active {% endif %}">
                 <a href="{% url 'list_rdv_toDay' %}" class="nav-link">
                 <span class="sidebar-icon"><span class="far fa-calendar-alt"></span></span>
                 <span>Planning </span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item  {% if 'rdvs' in segment %} active {% endif %}">
                 <a href="{% url 'rdvs' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="far fa-calendar-check"></span></span>
@@ -183,7 +183,7 @@
                 <span class="sidebar-icon">
                    <span class="fas fa-user-plus text-info"></span>
                 </span>
-                <span class="mt-1">Ajouter utilisateur</span>
+                <span class="mt-1">Ajouter infermiére</span>
                 </a>
             </li>
             {% endif%}

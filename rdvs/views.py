@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rdvs.forms import RdvForm, form_validation_error
 from rdvs.models import Rdv
 from django.contrib import messages
@@ -45,7 +45,8 @@ def ajouter_rdv(request):
 		if form.is_valid():
 			print("form is valid")
 			rdv = form.save()
-			evenement = Event(title = ''+nom_patient+' : '+date_debut_evenement+'',start_time=date_debut,end_time=date_fin )
+			print(rdv.id)
+			evenement = Event(title = ''+nom_patient+' : '+date_debut_evenement+'',start_time=date_debut,end_time=date_fin, rdv=rdv )
 			print("evenement = ",evenement.title)
 			evenement.save()
 			messages.success(request, 'Rendez-vous a été bien ajouté')
@@ -161,6 +162,27 @@ def ajouter_rdv_formulaire(request):
 	context['segment'] = 'list_rdv_week'
 	context['typrrdv_list'] = Typerdv.objects.all()
 	return render(request, "ajouter-rdv.html", context)
+
+
+@login_required(login_url="/login/")
+def modifier_rdv(request, event_id=None):
+	instance = Event()
+	if event_id:
+		instance = get_object_or_404(Event, pk=event_id)
+	else:
+		instance = Event()
+
+	print("instance",instance.id)
+
+	event = Event.objects.filter(id=instance.id)
+	
+
+
+
+	
+	return render(request, "ajouter-rdv.html", {})
+
+
 
 
 
