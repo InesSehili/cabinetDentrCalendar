@@ -115,18 +115,16 @@
                             <td><span class="font-weight-normal text-primary">{{consultation.prix_paye}}</span></td>
                             <td><span class="font-weight-normal">{{consultation.reste}}</span></td>
 
-
-                            <td>
+                                                       <td>
                                 <div class="btn-group">
-                                   <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
-                                        {% if consultation.diagnostique_existe is False %}
+                                    <div class="dropdown-menu">
+                                         {% if consultation.diagnostique_existe is False %}
                                         <form  action="{% url 'formulaire_creation_diagnostique' %}" method="POST">
                                             {% csrf_token %}
                                             <input type="hidden" name="nom" value="{{consultation.patient.nom}}">
@@ -264,13 +262,13 @@
                         <input type="hidden" name="patient" value="{{consultation.patient.id}}">
                             <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
                                         </form>
+
+
                                     </div>
                                 </div>
                             </td>
-                             <td>
-                            More actions
 
-                            </td>
+                           
                         </tr>
                         <!-- Item -->
                          {% endfor %}

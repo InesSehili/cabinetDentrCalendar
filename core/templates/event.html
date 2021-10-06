@@ -33,11 +33,67 @@
 
 <form method="post">
   {% csrf_token %}
-  <table class="form form-table">
-    {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Saungarder </button></td></tr>
-  </table>
+    <div class="row">
+          <div class="col-12 col-xl-6">
+        <div class="card card-body bg-white border-light shadow-sm mb-4">
+            <h2 class="h5 mb-4">Nouvel  évènement <span class="far fa-calendar-check text-warning"></span></h2>
+             <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="first_name">Titre</label>
+                                    <input name="title" class="form-control" id="first_name" type="text"
+                                           placeholder="Entrer le titre d'évènement" value="{{form.title.value}}"
+                                           required>
+                                </div>
+                            </div>
+                           
+                        </div>
+                         <div class="row">
+                          <div class="row align-items-center">
+                          
+                            <div class="col-md-12 mb-3">
+                                <label for="gender">Descriptions</label>
+                                <textarea name="description" class="form-control" id="observation" type="textarea"
+                                            required>{{form.description.value}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="row">
+                             <div class="col-md-6 mb-3">
+                                <label for="rdvDate">Date de debut</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">{{form.start_time.value}} </span>
+                                    <input name="start_time" class="form-control" id="rdvDate"
+                                           placeholder="AAAA-MM-JJ HH:MM" value="Ines" type="datetime-local" required> 
+                                </div>
+                            </div>
+                              <div class="col-md-6 mb-3">
+                                <label for="rdvDateFin">Date de fin </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"> {{form.end_time.value}}</span>
+                                    <input name="end_time"  class="form-control" id="rdvDateFin"
+                                         placeholder="AAAA-MM-JJ HH:MM" value="Ines" type="datetime-local" required>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+  
+    <!-- {{ form }} -->
+     <div class="mt-3">
+     <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+ 
+
 </form>
+</div>
+</div>
+</div>
 
           {% include 'includes/footer.html' %}
 

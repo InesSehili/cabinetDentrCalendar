@@ -71,19 +71,15 @@
                             <td><span class="font-weight-normal text-info">{{ordonance.consultation.patient.prenom}}</span></td>
                             
                             <td><span class="font-weight-normal text-info">{{ordonance.age}}</span></td>
-                           
-
-
                             <td>
                                 <div class="btn-group">
-                                    <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
+                                    <div class="dropdown-menu">
                                         <form  action="{% url 'list_medicament_ordonance' %}" method="POST">
                                             {% csrf_token %}
                                             
@@ -115,10 +111,14 @@
                                             
                                         <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt"></span>Supprimer</button>
                                         </form>
+                                      
                                     </div>
                                 </div>
                             </td>
-                            <td>More action</td>
+                           
+
+
+                      
                         </tr>
                         <!-- Item -->
                          {% endfor %}

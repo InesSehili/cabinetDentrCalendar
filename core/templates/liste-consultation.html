@@ -93,21 +93,16 @@
                             
                             <td><span class="font-weight-normal text-primary">{{consultation.prix_paye}}</span></td>
                             <td><span class="font-weight-normal">{{consultation.reste}}</span></td>
-
-
-                            <td>
+                                                         <td>
                                 <div class="btn-group">
-                                    <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content"> 
-
-
-
+                                    <div class="dropdown-menu">
+                                       
                                         <form action="{% url 'supprimer_consultation' %}" method="POST">
                                              {% csrf_token %}
 
@@ -120,10 +115,10 @@
                                     </div>
                                 </div>
                             </td>
-                             <td>
-                            More actions
-
+                                    </div>
+                                </div>
                             </td>
+ 
                         </tr>
                         <!-- Item -->
                          {% endfor %}
