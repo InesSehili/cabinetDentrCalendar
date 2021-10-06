@@ -97,19 +97,17 @@
                                      <!-- <iframe src="{{radio.radio_pdf.url}}" type="application/pdf"   height="300px" width="100%"></iframe> -->
                                      <a href="{{radio.radio_pdf.url}}" target="_blank" class="text-danger"><span class="fas fa-eye"></span>Voir Radio</a> 
                            </td> 
-
-
-                            <td>
+                           
+                        <td>
                                 <div class="btn-group">
-                                   <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
-                             <form action="{% url 'supprimer_radio' %}" method="POST">
+                                    <div class="dropdown-menu">
+                                     <form action="{% url 'supprimer_radio' %}" method="POST">
                     {% csrf_token %}
              <input type="hidden" name="id-radio" value="{{radio.id}}">
               <input type="hidden" name="id-patient" value="{{radio.patient.id}}">
@@ -123,14 +121,14 @@
                                               <input type="hidden" name="id_radio" value="{{radio.id}}">
                                         <button class="dropdown-item" type="submit"><span class="fas fa-eye mr-2"></span>Afficher Radio</button>
                                         </form>
-
                                     </div>
                                 </div>
                             </td>
-                              <td>
-                            More actions
 
-                            </td>
+
+
+
+
                         </tr>
                         <!-- Item -->
                          {% endfor %}

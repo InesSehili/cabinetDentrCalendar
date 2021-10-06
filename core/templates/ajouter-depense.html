@@ -121,22 +121,17 @@
                             <td><span class="font-weight-bold text-info ">{{depense.prix_sortie}}</span></td>
                             <td><span class="font-weight-bold text-info ">{{depense.created_at}}</span></td>                      
             <td><span class="font-weight-bold text-info " >{{depense.note}}</span></td>
-                   
-
-                            <td>
+                   <td>
                                 <div class="btn-group">
-                                <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                          {%if  depense.raison_payement != 'fournisseur' %}
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
-                               
-                                       
-            <form action="{% url 'supprimer_depense'%}" method="POST">
+                                    <div class="dropdown-menu">
+                                          <form action="{% url 'supprimer_depense'%}" method="POST">
                                             {% csrf_token %}
                                             
                 <input type="hidden" name="id_depense" value=" {{depense.id}}">
@@ -145,22 +140,13 @@
                                             </button> 
                                             </form>
                                               {% endif %}
-
-
-
-
-
-
-                                        
-                        
                                     </div>
                                 </div>
                             </td>
-                           
-                            <td>
-                            More actions
 
-                            </td>
+
+
+                          
                             
                             
 

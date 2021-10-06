@@ -238,17 +238,18 @@
                             <td><span class="font-weight-normal text-info">{{achat.created_at}}</span></td>
                               <td><span class="font-weight-bolder text-info">{{achat.etat}}</span></td>
 
-                            <td>
+
+
+                              <td>
                                 <div class="btn-group">
-                                 <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
-                                           <form action="{% url 'imprimer_bon_commande' %}" method="POST">
+                                    <div class="dropdown-menu">
+                                         <form action="{% url 'imprimer_bon_commande' %}" method="POST">
                                             {% csrf_token %}
                                             
                 <input type="hidden" name="achat" value="{{achat.id}}">
@@ -300,20 +301,11 @@
                                             </form>
                                          
 
-
-
-
-
-
-                                        
-                        
+                                     
                                     </div>
                                 </div>
                             </td>
-                             <td>
-                            More actions
 
-                            </td>
                            
                             
                             
