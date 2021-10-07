@@ -17,6 +17,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 @login_required(login_url="/login/")
 def ajouter_rdv(request):
+	context = {}
+	context ['segment'] = 'rdvs'
+	context['typrrdv_list'] = Typerdv.objects.all()
 	if request.method =="POST":
 		date_debut_str = request.POST.get('date_rdv')
 		print("date de debut",date_debut_str )
@@ -34,7 +37,7 @@ def ajouter_rdv(request):
 		nom_patient = request.POST.get('nom')
 		if date_debut > date_fin:
 			messages.error(request, "Date de debut ou de fin erroné")
-			return render(request, 'ajouter-rdv.html', {'segment':'rdvs'})
+			return render(request, 'ajouter-rdv.html', context)
 
 		dates_de_debut = Rdv.objects.filter(date_rdv =date_debut)
 		print("**********************************",dates_de_debut)
@@ -42,7 +45,7 @@ def ajouter_rdv(request):
 			if d.date_rdv == date_debut:
 				print( d.date_rdv)
 				messages.error(request, "Vous avez déja créé un rdv dont la date de debut et la meme. supprimer le ou bien changer de date")
-				return render(request, 'ajouter-rdv.html', {'segment':'rdvs'})
+				return render(request, 'ajouter-rdv.html', context)
 
 
 		form = RdvForm(request.POST or None)
@@ -54,11 +57,11 @@ def ajouter_rdv(request):
 			print("evenement = ",evenement.title)
 			evenement.save()
 			messages.success(request, 'Rendez-vous a été bien ajouté')
-			return render(request, 'ajouter-rdv.html', {'segment':'rdvs'})
+			return render(request, 'ajouter-rdv.html', context)
 		else:
 			print("form n'est pas valide")
 			messages.error(request, form_validation_error(form))
-	return render(request, 'ajouter-rdv.html', {})
+	return render(request, 'ajouter-rdv.html', context)
 
 @login_required(login_url="/login/")
 def liste_rdv(request):
@@ -216,9 +219,7 @@ def modifier_rdv_from_planning (request):
 	Event.objects.filter(rdv=Rdv.objects.get(id=id_rdv)).update(end_time =date_fin_evenement)
 	
 
-
-
-
+	
 	url = reverse('cal:calendar')
 	return  HttpResponseRedirect(url)
 

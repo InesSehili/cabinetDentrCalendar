@@ -7,7 +7,7 @@ from patients.views import ajouter_patient, liste_patient, archiver_patient, aff
 from rdvs.views import liste_rdv, modifier_rdv_from_planning, modifier_rdv, ajouter_rdv, confirmer_rdv, ajouter_patient_from_rdv, supprimer_rdv, list_rdv_toDay, list_rdv_week, list_rdv_month, ajouter_rdv_formulaire
 from consultations.views import  ajouter_consultation, modifier_prix_consultation,  modifier_consultation, liste_consultation, formulaire_creation_consultation, liste_consultation_non_payees, liste_consultation_patient, supprimer_consultation, liste_consultation_payees, liste_consultation_patient_payees, liste_consultation_patient_non_payees
 from fichesMedical.views import modifier_fiche_medical, modifier_contenu_fiche_medical, formulaire_creation_fiche_medical, liste_fiche_medical, ajouter_fiche_medical, supprimer_fiche_medical, afficher_fiche_medical
-from diagnostiques.views import delete_event, ajouter_diagnostique, afficher_diagnostique, formulaire_creation_diagnostique,  modifier_diagnostique_formulaire, supprimer_diagnostique
+from diagnostiques.views import ajouter_diagnostique, afficher_diagnostique, formulaire_creation_diagnostique,  modifier_diagnostique_formulaire, supprimer_diagnostique
 from medicaments.views import ajouter_medicament, liste_medicament, supprimer_medicament, modifier_medicament_formulaire, modifier_medicament
 from radios.views import ajouter_radio, formulaire_ajout_radio, liste_radio, supprimer_radio,  afficher_radio_patient, afficher_radio
 from traitements.views import formulaire_creation_traitement, ajouter_traitement, valider_traitement, annuler_traitement, supprimer_traitement
@@ -119,7 +119,7 @@ urlpatterns = [
     path('ajouter_rdv_formulaire', ajouter_rdv_formulaire, name="ajouter_rdv_formulaire"),
     path('supprimer_type_rdv', supprimer_type_rdv, name="supprimer_type_rdv"),
     path('modifier_rdv_from_planning', modifier_rdv_from_planning, name="modifier_rdv_from_planning"),
-    path('delete_event', delete_event, name="delete_event"),
+   
 
     
 

@@ -20,4 +20,4 @@ class Event(models.Model):
 
         
 
-        return f'<a href="{url}"> {self.title} </a>'
+        return f'<a  href="{url}"> {self.title} </a>'

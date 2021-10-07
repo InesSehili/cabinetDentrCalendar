@@ -59,7 +59,7 @@ def event(request, event_id=None):
         return HttpResponseRedirect(reverse('cal:calendar'))
 
     print(request)
-    return render(request, 'event.html', {'form': form, 'event_id':event_id})
+    return render(request, 'event.html', {'form': form})
 
 
 

@@ -159,19 +159,19 @@ def supprimer_diagnostique(request):
 
 		return render(request, "liste-consultation-patient.html", context)
 
-@login_required(login_url="/login/")
-def delete_event(request):
-    if request.method =="POST":
-        id_event = request.POST.get('id_event')
-        print( "l'idée de l'evenement est", id_event)
-        print( "*************************/*///////////////////////****************")
+# @login_required(login_url="/login/")
+# def delete_event(request):
+#     if request.method =="POST":
+#         id_event = request.POST.get('id_event')
+#         print( "l'idée de l'evenement est", id_event)
+#         print( "*************************/*///////////////////////****************")
 
     
 
-    Event.objects.get(id=id_event).delete()
+#     Event.objects.get(id=id_event).delete()
 
-    url = reverse('cal:calendar')
-    return  HttpResponseRedirect(url)
+#     url = reverse('cal:calendar')
+#     return  HttpResponseRedirect(url)
 
 
 	
