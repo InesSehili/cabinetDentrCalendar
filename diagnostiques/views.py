@@ -5,6 +5,8 @@ from django.contrib import messages
 from consultations.models import Consultation
 from django.contrib.auth.decorators import login_required
 from core.decorators import allowed_users
+from cal.models import Event
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 @login_required(login_url="/login/")
@@ -110,6 +112,8 @@ def afficher_diagnostique(request):
 
 # 	} 
 # 	 return render(request, 'modifier-diagnostique.html', context)
+
+
 @login_required(login_url="/login/")
 @allowed_users(allowed_roles=['dentiste'])
 def modifier_diagnostique_formulaire(request):
@@ -154,6 +158,20 @@ def supprimer_diagnostique(request):
 		context['id'] = id_patient
 
 		return render(request, "liste-consultation-patient.html", context)
+
+@login_required(login_url="/login/")
+def delete_event(request):
+    if request.method =="POST":
+        id_event = request.POST.get('id_event')
+        print( "l'idée de l'evenement est", id_event)
+        print( "*************************/*///////////////////////****************")
+
+    
+
+    Event.objects.get(id=id_event).delete()
+
+    url = reverse('cal:calendar')
+    return  HttpResponseRedirect(url)
 
 
 	

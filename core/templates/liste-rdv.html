@@ -64,7 +64,7 @@
                             <th>type de rendez-vous</th>
                             <th>Date de rendez-vous</th>
                             <th>Date de fin de rendez-vous</th>
-                            <th>Status</th>
+                         <!--    <th>Status</th> -->
                              
                             
                             
@@ -86,7 +86,7 @@
                             <td><span class="font-weight-bold text-info">{{rdv.type_rdv}}</span></td>
                             <td><span class="font-weight-normal text-info">{{rdv.date_rdv}}</span></td>
                             <td><span class="font-weight-bold text-info">{{rdv.date_fin}}</span></td>
-                            {%if rdv.statut == "en cours"%}
+                         <!--    {%if rdv.statut == "en cours"%}
 
                              <td><span class="font-weight-bold  text-secondary ">{{rdv.statut}}</span></td>
                              {%endif%}
@@ -94,46 +94,34 @@
 
                              <td><span class="font-weight-bold  text-success ">{{rdv.statut}}</span></td>
                              {%endif%}
-                    
+                     -->
                     
 
                             
-                            
-
-
-                            <td>
+                               <td>
                                 <div class="btn-group">
-                                  <div class="dropdown dropdown-toggle-split m-0 p-0">
-                                    <button class="dropbtn">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
                                         </span>
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
-                                    <div class="dropdown-content">
-                                         {%if rdv.statut == "en cours"%}
-                                         <form action="{% url 'confirmer_rdv'%}" method="POST">
-                                            {% csrf_token %}
-                                             <input type="hidden" name="id" value="{{rdv.id}}">
-                                             <button class="dropdown-item text-success" type="submit"> <span class="fas fa-eye mr-2"></span>Confirmer</a></button>
-
-                                         </form>
-                                        <!-- <a class="dropdown-item text-success" href="/static/assets/invoice.html"><span class="fas fa-eye mr-2"></span>Confirmer</a> -->
-                                        {%endif%}
-                                         {%if rdv.statut != "en cours"%}
-                                         <form action="{%url 'ajouter_patients_rdv'%}" method="POST">
+                                    <div class="dropdown-menu">
+                                       <form action="{%url 'ajouter_patients_rdv'%}" method="POST">
                                             {% csrf_token %}
                                              <input type="hidden" name="id" value="{{rdv.id}}">
                                              <input type="hidden" name="nom" value="{{rdv.nom}}">
                                              <input type="hidden" name="prenom" value="{{rdv.prenom}}">
                                              <button class="dropdown-item text-success" type="submit"> <span class="fas fa-plus mr-2"></span>Enregister Patient</a></button>
 
+
+
                                          </form>
-                                        <!-- <a class="dropdown-item text-success" href="/static/assets/invoice.html"><span class="fas fa-eye mr-2"></span>Confirmer</a> -->
-                                        {%endif%}
-                    
-                                        <a class="dropdown-item" href="#"><span class="fas fa-edit mr-2"></span>Edit</a>
-                                        <form action="{% url 'supprimer_rdv'%}" method="POST">
+
+
+
+                                         
+                                               <form action="{% url 'supprimer_rdv'%}" method="POST">
                                              {% csrf_token %}
                                               <input type="hidden" name="id" value="{{rdv.id}}">
                                         <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
@@ -141,7 +129,9 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>More actions</td>
+
+
+
                         </tr>
                         <!-- Item -->
                          {% endfor %}
